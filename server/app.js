@@ -25,13 +25,18 @@ db.sequelize
   .catch((err) => console.error(err));
 passportConfig();
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(helmet());
+  app.use(hpp());
+} else {
+  app.use(morgan('dev'));
+}
+
 app.enable('trust proxy');
-app.use(helmet());
-app.use(morgan('dev'));
-app.use(hpp());
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'chifuyu.site'],
     credentials: true,
   }),
 );
@@ -61,6 +66,10 @@ app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/comment', commentRouter);
 app.use('/post', postRouter);
+
+app.get('/', (req, res) => {
+  res.send('hello sns');
+});
 
 app.listen(PORT, () => {
   console.log(`running at port ${PORT}`);
