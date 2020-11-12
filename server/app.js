@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 const hpp = require('hpp');
 const helmet = require('helmet');
 const db = require('./models');
-const PORT = 3010;
+const PORT = 80;
 
 const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
