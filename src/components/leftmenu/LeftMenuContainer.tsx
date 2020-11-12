@@ -6,7 +6,7 @@ import { RootState } from '../../reducer/index';
 import HomeButtonContainer from './home/HomeButtonContainer';
 import FriendList from './friends/FriendList';
 import FriendListContainer from './friends/FriendListContainer';
-import LeftMessageContainer from './leftmessage/LeftMessageContainer';
+// import LeftMessageContainer from './leftmessage/LeftMessageContainer';
 import SettingsOpenContainer from './setSettings/SettingsOpenContainer';
 import WriteButtonContainer from '../write/WriteButtonContainer';
 import IgnoreListContainer from './ignore/IgnoreListContainer';
@@ -43,12 +43,9 @@ function LeftMenuContainer() {
     dispatch(getPostRequest(lastId));
   }, [dispatch, postState]);
 
-  const onChangeSearchWord = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchWord(e.target.value);
-    },
-    [],
-  );
+  const onChangeSearchWord = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchWord(e.target.value);
+  }, []);
 
   const onSubmitSearch = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -92,23 +89,19 @@ function LeftMenuContainer() {
     <LeftMenuWrapper>
       <LeftMenuSearchBox darkmode={darkmode}>
         <Icons>
-          <MdSearch className="SearchIcon" />
+          <MdSearch className='SearchIcon' />
         </Icons>
         <LeftMenuSearchContainer onSubmit={onSubmitSearch}>
           <LeftMenuSearchInput
             darkmode={darkmode}
-            placeholder="검색"
+            placeholder='검색'
             value={searchWord}
             onChange={onChangeSearchWord}
             ref={searchInput}
           />
         </LeftMenuSearchContainer>
-        <ResetIcon
-          onClick={onReset}
-          isReset={isReset}
-          title="게시글 새로 가져오기"
-        >
-          <GrPowerReset className="SearchIcon" />
+        <ResetIcon onClick={onReset} isReset={isReset} title='게시글 새로 가져오기'>
+          <GrPowerReset className='SearchIcon' />
         </ResetIcon>
         {/* <div className="resultFrame"></div> */}
       </LeftMenuSearchBox>
@@ -127,9 +120,9 @@ function LeftMenuContainer() {
             {/* <li>
               <LeftMessageContainer />
             </li> */}
-            <li className="friends">
+            <li className='friends'>
               <FriendListContainer />
-              <div className="friend-box">
+              <div className='friend-box'>
                 <FriendList />
                 <IgnoreListContainer />
               </div>
@@ -137,7 +130,7 @@ function LeftMenuContainer() {
             <li>
               <SettingsOpenContainer />
             </li>
-            <li className="mobileNight">
+            <li className='mobileNight'>
               <button onClick={onToggle}>
                 <IoMdMoon />
               </button>
