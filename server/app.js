@@ -53,9 +53,9 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     proxy: true,
     cookie: {
-      // domain: ['http://localhost:3000'],
       secure: false,
-      httpOnly: false,
+      httpOnly: true,
+      domain: process.env.NODE_ENV === 'production' && '.chifuyu.site',
     },
   }),
 );

@@ -1,1 +1,1 @@
-export const baseUrl = `http://3.35.216.163/`;
+export const baseUrl = `http://api.chifuyu.site/`;
