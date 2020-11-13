@@ -29,17 +29,23 @@ if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(helmet());
   app.use(hpp());
+  app.use(
+    cors({
+      origin: 'chifuyu.site',
+      credentials: true,
+    }),
+  );
 } else {
   app.use(morgan('dev'));
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    }),
+  );
 }
 
 app.enable('trust proxy');
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'chifuyu.site', 'http://13.125.57.186'],
-    credentials: true,
-  }),
-);
 
 app.use('/', express.static(path.join(__dirname, 'upload')));
 app.use(express.json());
