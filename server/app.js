@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 app.enable('trust proxy');
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'chifuyu.site'],
+    origin: ['http://localhost:3000', 'chifuyu.site', 'http://13.125.57.186'],
     credentials: true,
   }),
 );
