@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 const hpp = require('hpp');
 const helmet = require('helmet');
 const db = require('./models');
-const PORT = 80;
+const PORT = 3010;
 
 const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(
     cors({
-      origin: 'chifuyu.site',
+      origin: 'https://chifuyu.site',
       credentials: true,
     }),
   );
@@ -59,8 +59,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     proxy: true,
     cookie: {
-      secure: false,
       httpOnly: true,
+      secure: true,
       domain: process.env.NODE_ENV === 'production' && '.chifuyu.site',
     },
   }),

@@ -1,1 +1,1 @@
-export const baseUrl = `http://api.chifuyu.site/`;
+export const baseUrl = `https://api.chifuyu.site/`;
