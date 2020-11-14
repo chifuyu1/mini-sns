@@ -44,7 +44,7 @@ export const LeftMenuSearchBox = styled.div<{ darkmode: boolean }>`
   ${LeftMenuFlexGrow()};
   border-radius: 4px;
   margin-bottom: 20px;
-  padding: 0 4px;
+  padding: 0 10px;
   background-color: #fff;
   /* position: relative; */
 
@@ -71,6 +71,7 @@ export const LeftMenuSearchBox = styled.div<{ darkmode: boolean }>`
     flex-direction: row-reverse;
     flex: 1;
     height: 40px;
+    padding: 0 10px;
     order: 1;
     background: ${(props) => (props.darkmode ? theme.dark.box : '#fff')};
   }
@@ -78,6 +79,7 @@ export const LeftMenuSearchBox = styled.div<{ darkmode: boolean }>`
 
 export const LeftMenuSearchContainer = styled.form`
   ${LeftMenuFlexGrow()};
+  padding: 0 4px;
 `;
 
 export const LeftMenuSearchInput = styled.input<{
@@ -96,6 +98,7 @@ export const LeftMenuListStyle = styled.ul<{
   ${media.small} {
     border-radius: 0;
     height: 50px;
+    justify-content: flex-end;
   }
   li {
     ${(props) => MenuListStyle(props.darkmode)};

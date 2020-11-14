@@ -130,15 +130,15 @@ function LeftMenuContainer() {
             <li>
               <SettingsOpenContainer />
             </li>
-            <li className='mobileNight'>
-              <button onClick={onToggle}>
-                <IoMdMoon />
-              </button>
-            </li>
           </>
         ) : (
           <></>
         )}
+        <li className='mobileNight'>
+          <button onClick={onToggle}>
+            <IoMdMoon />
+          </button>
+        </li>
       </LeftMenuListStyle>
       <RightMenuView>
         <RightMenuContainerRes />

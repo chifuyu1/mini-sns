@@ -13,11 +13,7 @@ import {
   LoginWindowPicture,
   LoginWindowWrapper,
 } from './styles';
-import {
-  loginInitialze,
-  loginRequest,
-  signupRequest,
-} from '../../reducer/user';
+import { loginInitialze, loginRequest, signupRequest } from '../../reducer/user';
 import Loading from '../loading/Loading';
 import { useHistory } from 'react-router-dom';
 
@@ -47,28 +43,22 @@ function LoginWindow() {
     [setPw],
   );
 
-  const onKeyboardCapsLock = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      let isCapsLock = e.getModifierState('CapsLock');
-      if (isCapsLock) {
-        setUppercase(true);
-      } else {
-        setUppercase(false);
-      }
-    },
-    [],
-  );
-  const onMouseCapsLock = useCallback(
-    (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-      let isCapsLock = event.getModifierState('CapsLock');
-      if (isCapsLock) {
-        setUppercase(true);
-      } else {
-        setUppercase(false);
-      }
-    },
-    [],
-  );
+  const onKeyboardCapsLock = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    let isCapsLock = e.getModifierState('CapsLock');
+    if (isCapsLock) {
+      setUppercase(true);
+    } else {
+      setUppercase(false);
+    }
+  }, []);
+  const onMouseCapsLock = useCallback((event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    let isCapsLock = event.getModifierState('CapsLock');
+    if (isCapsLock) {
+      setUppercase(true);
+    } else {
+      setUppercase(false);
+    }
+  }, []);
 
   const onChangeRpw = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setRpw(e.target.value);
@@ -111,20 +101,12 @@ function LoginWindow() {
         return;
       }
       if (pw.trim().length < 6) {
-        alert(
-          '비밀번호는 영문, 숫자, 특수기호를 포함한 6~20자 이내로 가능합니다.',
-        );
+        alert('비밀번호는 영문, 숫자, 특수기호를 포함한 6~20자 이내로 가능합니다.');
         pwInput.current.focus();
         return;
       }
-      if (
-        !RegExp('^(?=.*[A-Za-z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{6,20}$').test(
-          pw.trim(),
-        )
-      ) {
-        alert(
-          '비밀번호는 영문, 숫자, 특수기호를 포함한 6~20자 이내로 가능합니다.',
-        );
+      if (!RegExp('^(?=.*[A-Za-z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{6,20}$').test(pw.trim())) {
+        alert('비밀번호는 영문, 숫자, 특수기호를 포함한 6~20자 이내로 가능합니다.');
         return;
       }
 
@@ -162,35 +144,31 @@ function LoginWindow() {
     <LoginWindowContainer>
       <LoginWindowWrapper darkmode={darkmode}>
         <LoginWindowBox darkmode={darkmode}>
-          <div className="box">
+          <div className='box'>
             <LoginWindowPicture />
             <LoginWindowInputDisplay darkmode={darkmode}>
-              <LoginWindowForm
-                onSubmit={onSubmit}
-                darkmode={darkmode}
-                method="POST"
-              >
-                <div className="FromGroup">
+              <LoginWindowForm onSubmit={onSubmit} darkmode={darkmode} method='POST'>
+                <div className='FromGroup'>
                   <span>Username</span>
                   <LoginWindowInput
                     darkmode={darkmode}
-                    type="text"
-                    placeholder="username"
+                    type='text'
+                    placeholder='username'
                     onChange={onUsername}
                     value={username}
-                    name="username"
+                    name='username'
                     ref={usernameInput}
                     onKeyUp={onKeyboardCapsLock}
                     onMouseDown={onMouseCapsLock}
                   />
                 </div>
-                <div className="FormGroup">
+                <div className='FormGroup'>
                   <span>Password</span>
                   <LoginWindowInput
                     darkmode={darkmode}
-                    type="password"
-                    placeholder="Password"
-                    name="password"
+                    type='password'
+                    placeholder='Password'
+                    name='password'
                     onChange={onPassword}
                     value={pw}
                     ref={pwInput}
@@ -202,40 +180,26 @@ function LoginWindow() {
                 {signup ? (
                   <LoginWindowInput
                     darkmode={darkmode}
-                    type="password"
-                    placeholder="Repeat password"
+                    type='password'
+                    placeholder='Repeat password'
                     onChange={onChangeRpw}
                     value={rpw}
                     onKeyUp={onKeyboardCapsLock}
                     onMouseDown={onMouseCapsLock}
                   />
                 ) : (
-                  <button
-                    className="LoginSubmit"
-                    type="button"
-                    onClick={onSign}
-                  >
-                    Sign Up
+                  <button className='LoginSubmit' type='button' onClick={onSign}>
+                    회원 가입
                   </button>
                 )}
                 {matchError ? '비밀번호가 일치하지 않습니다.' : ''}
                 {uppercase ? 'CapsLock이 켜져있습니다.' : ''}
-                <button className="LoginSubmit" type="submit">
-                  {signup ? (
-                    signupLoading ? (
-                      <Loading />
-                    ) : (
-                      'Account Resister'
-                    )
-                  ) : loginLoading ? (
-                    <Loading />
-                  ) : (
-                    'Sign In'
-                  )}
+                <button className='LoginSubmit' type='submit'>
+                  {signup ? signupLoading ? <Loading /> : '회원 등록' : loginLoading ? <Loading /> : '로그인'}
                 </button>
                 {signup ? (
-                  <button className="LoginSubmit" onClick={onSignOff}>
-                    Back
+                  <button className='LoginSubmit' onClick={onSignOff}>
+                    뒤로 가기
                   </button>
                 ) : (
                   <></>
@@ -244,21 +208,16 @@ function LoginWindow() {
                   <></>
                 ) : (
                   <LoginWindowAuthSite darkmode={darkmode}>
-                    <a
-                      className="GitHubLogin"
-                      href="https://github.com"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
+                    <a className='GitHubLogin' href='https://github.com' rel='noopener noreferrer' target='_blank'>
                       <GoMarkGithub />
-                      Sign for GitHub Account
+                      Github 로그인
                     </a>
                   </LoginWindowAuthSite>
                 )}
               </LoginWindowForm>
             </LoginWindowInputDisplay>
           </div>
-          <div className="btn">
+          <div className='btn'>
             <LoginCloseButton />
           </div>
         </LoginWindowBox>

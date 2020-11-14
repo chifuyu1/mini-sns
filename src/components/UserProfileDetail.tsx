@@ -49,9 +49,9 @@ function UserProfileDetail({ detail, username, id }: UserProfileDetailProps) {
       <li>
         <FriendInsert username={username} id={id} />
       </li>
-      <li>
+      {/* <li>
         <button type="button">쪽지 보내기</button>
-      </li>
+      </li> */}
       <li>
         <IgnoreInsert username={username} id={id} />
       </li>
