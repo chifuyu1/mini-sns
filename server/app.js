@@ -74,7 +74,9 @@ app.use('/comment', commentRouter);
 app.use('/post', postRouter);
 
 app.get('/', (req, res) => {
-  res.send('hello sns');
+  if (process.env.NODE_ENV === 'production') {
+    res.send('hello sns');
+  } else res.send('sns dev');
 });
 
 app.listen(PORT, () => {
