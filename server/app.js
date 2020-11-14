@@ -25,25 +25,26 @@ db.sequelize
   .catch((err) => console.error(err));
 passportConfig();
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(morgan('combined'));
-  app.use(helmet());
-  app.use(hpp());
-  app.use(
-    cors({
-      origin: 'https://chifuyu.site',
-      credentials: true,
-    }),
-  );
-} else {
-  app.use(morgan('dev'));
-  app.use(
-    cors({
-      origin: 'http://localhost:3000',
-      credentials: true,
-    }),
-  );
-}
+// if (process.env.NODE_ENV === 'production') {
+app.use(morgan('combined'));
+app.use(helmet());
+app.use(hpp());
+app.use(
+  cors({
+    origin: 'https://chifuyu.site',
+    credentials: true,
+  }),
+);
+// }
+// else {
+//   app.use(morgan('dev'));
+//   app.use(
+//     cors({
+//       origin: 'http://localhost:3000',
+//       credentials: true,
+//     }),
+//   );
+// }
 
 app.enable('trust proxy');
 
@@ -61,7 +62,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true,
-      domain: process.env.NODE_ENV === 'production' && '.chifuyu.site',
+      domain: '.chifuyu.site',
     },
   }),
 );
