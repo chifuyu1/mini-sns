@@ -61,7 +61,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
-      // domain: process.env.NODE_ENV === 'production' ? '.chifuyu.site' : 'http://localhost:3000',
+      domain: process.env.NODE_ENV === 'production' ? '.chifuyu.site' : 'http://localhost:3000',
     },
   }),
 );
