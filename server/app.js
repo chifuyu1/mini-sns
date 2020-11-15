@@ -25,6 +25,8 @@ db.sequelize
   .catch((err) => console.error(err));
 passportConfig();
 
+process.env.NODE_ENV = 'production';
+
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(helmet());
