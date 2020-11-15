@@ -5,9 +5,6 @@ import messageToggle from '../components/message/messageReducer';
 import settingsToggle from '../components/leftmenu/setSettings/setSettingsReducer';
 import writeToggle from '../components/write/writeReducer';
 import PostAdd from '../components/content/postAddReducer';
-import friendAddRemove from '../components/leftmenu/friends/friendAddRemove';
-import ignore from '../components/leftmenu/ignore/ignore';
-import CommentReducers from '../components/comment/commentReducer';
 import loginToggle from '../components/loginwindow/loginWindowReducer';
 import MailBox from '../components/message/MailBox';
 import MailToggle from '../components/message/MailToggle';
@@ -21,9 +18,6 @@ const rootReducer = combineReducers({
   settingsToggle,
   writeToggle,
   loginWindow: loginToggle,
-  friendAddRemove,
-  ignore,
-  CommentReducers,
   PostAdd,
   MailBox,
   MailToggle,

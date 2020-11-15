@@ -6,22 +6,17 @@ import UserInfo from './UserInfo';
 import CommentList from './comment/CommentList';
 import PostInfo from './content/PostInfo';
 import PostSummary from './content/PostSummary';
-import { ContentBox, IgnoreFilter } from '../util/CommonStyle';
+import { ContentBox } from '../util/CommonStyle';
 import PostTitleItem from '../components/content/PostTitleItem';
 import media from '../util/mediaQuery';
 import PostDate from './content/PostDate';
-import { RootState } from '../reducer/index';
-import { useSelector } from 'react-redux';
 import PostUpdate from './content/PostUpdate';
 
-const PostChunk = styled.div<{ filter: number }>`
-  ${(props) => IgnoreFilter(props.filter)};
-`;
+const PostChunk = styled.div``;
 
-const PostBackground = styled.div<{ filter: number }>`
+const PostBackground = styled.div`
   background: #f1f3f5;
   ${ContentBox};
-  ${(props) => IgnoreFilter(props.filter)};
   ${media.medium} {
     max-width: initial;
   }
@@ -99,45 +94,9 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
     setFold((prev) => !prev);
   }, []);
 
-  const ignoreArray = useSelector((state: RootState) => state.ignore);
-  const ignoreList = ignoreArray.map((list) => list.username);
-  const writtenArray = useSelector((state: RootState) => state.PostAdd);
-  const writtenList = writtenArray.map((list) => list.username);
-  // const isList = useSelector((state: RootState) => state.CommentReducers);
-  // const isListArray = isList.filter((list) => list.postId === id);
-  // const isListLength = isListArray.length;
-
-  const isIgnore = (ignoreUsers: string[], writtenUsers: string[], name: string) => {
-    // 게시물에 차단 목록 유저가 있으면 보여주지 않음
-    // 따라서 게시물 username 배열에 차단목록 username이 있는지 확인
-    let a = ignoreUsers.sort();
-    let b = writtenUsers.sort();
-    const c = Math.max(a.length, b.length);
-    let d = [];
-    for (let i = 0; i < c; i++) {
-      const res = a.filter((element) => element === b[i]);
-      if (res) {
-        d.push(res);
-      }
-    }
-    let e = [];
-    for (let i = 0; i < d.length; i++) {
-      for (let j = 0; j < d[i].length; j++) {
-        e.push(d[i][j]);
-      }
-    }
-    let flag = 0;
-    if (e.includes(name) === true) {
-      flag = 1;
-    }
-    return flag;
-  };
-  const isLook = isIgnore(ignoreList, writtenList, username);
-  const isLookError = id === -404 ? 1 : isIgnore(ignoreList, writtenList, username);
-
   return (
     <>
-      <PostBackground filter={id === -404 ? 0 : isLook}>
+      <PostBackground>
         <PostContent>
           <PostWrapper>
             <UserInfo onClick={onChangeUserProfile} username={username} id={id} />
@@ -163,7 +122,7 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
           <PostInfo id={id} fold={fold} onFold={onFold} />
         </PostContent>
       </PostBackground>
-      <PostChunk filter={isLookError}>
+      <PostChunk>
         <Comment id={id} />
         {fold ? <></> : <CommentList key={id} id={id} />}
       </PostChunk>

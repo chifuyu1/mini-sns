@@ -26,8 +26,8 @@ router.get('/user', async (req, res, next) => {
           },
           {
             model: User,
-            as: 'Friends',
-            through: { attributes: ['FriendId'] },
+            as: 'Friending',
+            through: { attributes: ['FriendedId'] },
             attributes: ['id', 'username'],
           },
           {
@@ -94,8 +94,8 @@ router.post('/signin', isNotLogin, (req, res, next) => {
           },
           {
             model: User,
-            as: 'Friends',
-            through: { attributes: ['FriendId'] },
+            as: 'Friending',
+            through: { attributes: ['FriendedId'] },
             attributes: ['id', 'username'],
           },
           {

@@ -31,9 +31,14 @@ module.exports = (sequelize, DataTypes) => {
     db.User.hasMany(db.Comment);
     db.User.hasOne(db.ProfileImage);
     db.User.belongsToMany(db.User, {
-      as: 'Friends',
       through: 'friend',
-      foreignKey: 'friendsId',
+      as: 'Friended',
+      foreignKey: 'friendedId',
+    });
+    db.User.belongsToMany(db.User, {
+      through: 'friend',
+      as: 'Friending',
+      foreignKey: 'friendingId',
     });
     db.User.belongsToMany(db.User, {
       through: 'ignore',

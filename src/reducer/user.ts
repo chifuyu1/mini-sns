@@ -499,7 +499,7 @@ const userReducer = (state: UserState = userState, action: Actions) =>
         draft.addFriendLoading = false;
         draft.addFriendDone = true;
         draft.addFriendError = null;
-        draft.userInfo.Friends = draft.userInfo.Friends.concat({
+        draft.userInfo.Friending = draft.userInfo.Friending.concat({
           id: action.data.id,
           username: action.data.username,
         }).sort((a: any, b: any) => a.id - b.id);
@@ -519,9 +519,9 @@ const userReducer = (state: UserState = userState, action: Actions) =>
         draft.removeFriendLoading = false;
         draft.removeFriendDone = true;
         draft.removeFriendError = null;
-        draft.userInfo.Friends = draft.userInfo.Friends.filter(
-          (f: any) => f.id !== action.data.id,
-        ).sort((a: any, b: any) => a.id - b.id);
+        draft.userInfo.Friending = draft.userInfo.Friending.filter((f: any) => f.id !== action.data.id).sort(
+          (a: any, b: any) => a.id - b.id,
+        );
         break;
       case REMOVE_FRIEND_ERROR:
         draft.removeFriendLoading = false;
@@ -557,9 +557,9 @@ const userReducer = (state: UserState = userState, action: Actions) =>
         draft.removeIgnoreLoading = false;
         draft.removeIgnoreDone = true;
         draft.removeIgnoreError = null;
-        draft.userInfo.Ignorings = draft.userInfo.Ignorings.filter(
-          (f: any) => f.id !== action.data.id,
-        ).sort((a: any, b: any) => a.id - b.id);
+        draft.userInfo.Ignorings = draft.userInfo.Ignorings.filter((f: any) => f.id !== action.data.id).sort(
+          (a: any, b: any) => a.id - b.id,
+        );
         break;
       case REMOVE_IGNORE_ERROR:
         draft.removeIgnoreLoading = false;
@@ -621,9 +621,7 @@ const userReducer = (state: UserState = userState, action: Actions) =>
       case REMOVE_LIKE_SUCCESS:
         draft.removeLikeLoading = false;
         draft.removeLikeDone = true;
-        draft.userInfo.Likes = draft.userInfo.Likes.filter(
-          (info: any) => info.id !== action.data.id,
-        );
+        draft.userInfo.Likes = draft.userInfo.Likes.filter((info: any) => info.id !== action.data.id);
         break;
       case REMOVE_LIKE_ERROR:
         draft.removeLikeLoading = false;

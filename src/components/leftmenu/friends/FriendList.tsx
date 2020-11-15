@@ -8,8 +8,7 @@ import media from '../../../util/mediaQuery';
 import theme from '../../../util/theme';
 
 const FriendLists = styled.ul<{ darkmode: boolean; friend: boolean }>`
-  ${(props) =>
-    props.darkmode ? MenuListCommonStyle(true) : MenuListCommonStyle(false)};
+  ${(props) => (props.darkmode ? MenuListCommonStyle(true) : MenuListCommonStyle(false))};
   /* position: absolute; */
   top: 0;
   left: 0;
@@ -65,12 +64,9 @@ function FriendList() {
 
   return (
     <FriendLists darkmode={darkmode} friend={friend}>
-      <li>
-        친구 목록{' '}
-        {userState && userState.Friends ? userState.Friends.length : '0'}명
-      </li>
-      {userState && userState.Friends ? (
-        userState.Friends.map((user: any) => {
+      <li>친구 목록 {userState && userState.Friending ? userState.Friending.length : '0'}명</li>
+      {userState && userState.Friending ? (
+        userState.Friending.map((user: any) => {
           return <User name={user.username} key={user.id} id={user.id} />;
         })
       ) : (

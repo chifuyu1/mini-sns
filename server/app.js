@@ -26,6 +26,7 @@ db.sequelize
 passportConfig();
 
 process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'development';
 
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
@@ -62,7 +63,7 @@ app.use(
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       domain: process.env.NODE_ENV === 'production' ? '.chifuyu.site' : 'http://localhost:3000',
     },
   }),

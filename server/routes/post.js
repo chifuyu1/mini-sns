@@ -169,8 +169,8 @@ router.get('/unBlockIgnore', async (req, res, next) => {
         },
         {
           model: User,
-          as: 'Friends',
-          through: { attributes: ['FriendId'] },
+          as: 'Friending',
+          through: { attributes: ['FriendingId'] },
           attributes: ['id', 'username'],
         },
         {
@@ -276,8 +276,8 @@ router.get('/blockIgnore', async (req, res, next) => {
         },
         {
           model: User,
-          as: 'Friends',
-          through: { attributes: ['FriendId'] },
+          as: 'Friending',
+          through: { attributes: ['FriendingId'] },
           attributes: ['id', 'username'],
         },
         {

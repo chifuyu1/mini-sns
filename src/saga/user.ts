@@ -32,7 +32,6 @@ import {
   UNBLOCK_IGNORE_SUCCESS,
   UNBLOCK_IGNORE_ERROR,
 } from '../reducer/user';
-import { friendAdd } from '../components/leftmenu/friends/friendAddRemove';
 import {
   ADD_LIKE,
   BLOCK_IGNORE_POST,
@@ -55,7 +54,6 @@ function* addFriend(action: any) {
       type: ADD_FRIEND_SUCCESS,
       data: result.data,
     });
-    yield put(friendAdd(parseInt(result.data.id, 10), result.data.username));
   } catch (err) {
     console.error(err);
     yield put({

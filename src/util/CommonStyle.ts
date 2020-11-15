@@ -32,8 +32,7 @@ export const InputCommonStyle = (darkmode: boolean = false) => css`
 /* background: ${darkmode ? theme.dark.bg : theme.light.box}; */
 /* color: ${darkmode ? theme.dark.text : theme.light.text}; */
 export const InputVirtualEvent = (darkmode: boolean = false) => css`
-  ${(darkmode) =>
-    darkmode ? InputCommonStyle(true) : InputCommonStyle(false)};
+  ${(darkmode) => (darkmode ? InputCommonStyle(true) : InputCommonStyle(false))};
   &:focus {
     outline: ${darkmode ? theme.dark.bg : theme.light.bg};
     border-color: ${darkmode ? theme.dark.bg : theme.light.bg};
@@ -83,8 +82,7 @@ export const CommentSubmitButtonStyle = (darkmode: boolean = false) => css`
 
 export const LoginWindowSubmitButtonStyle = (darkmode: boolean) => css`
   ${FlexJustifyAlignitems};
-  ${(darkmode) =>
-    darkmode ? InputVirtualEvent(true) : InputVirtualEvent(false)};
+  ${(darkmode) => (darkmode ? InputVirtualEvent(true) : InputVirtualEvent(false))};
   width: 100%;
   background-color: ${darkmode ? theme.dark.bg : theme.light.bg};
   color: ${darkmode ? theme.dark.text : theme.light.text};
@@ -108,10 +106,7 @@ export const LoginWindowSubmitButtonStyleCursor = (darkmode: boolean) => css`
 `;
 
 // li Style
-export const MenuListStyle = (
-  darkmode: boolean = false,
-  fontSize: number = 18,
-) => css`
+export const MenuListStyle = (darkmode: boolean = false, fontSize: number = 18) => css`
   list-style: none;
   ${media.small} {
     display: flex;
@@ -167,10 +162,7 @@ export const MenuListCommonStyle = (darkmode: boolean = false) => css`
   }
 `;
 
-export const SettingMenuListStyle = (
-  darkmode: boolean = false,
-  ratio: number,
-) => css`
+export const SettingMenuListStyle = (darkmode: boolean = false, ratio: number) => css`
   display: flex;
   flex-direction: column;
   flex: ${ratio};
@@ -386,10 +378,6 @@ export const RouterLinkButton = styled(Link)<{ darkmode: boolean }>`
   }
 `;
 
-export const IgnoreFilter = (filter: number) => css`
-  display: ${filter > 0 ? 'none' : 'block'};
-`;
-
 export const MsgContainer = (darkmode: boolean, toggle: boolean) => css`
   width: 540px;
   height: auto;
@@ -447,10 +435,7 @@ export const MsgListItemCommon = () => css`
 
 export const MsgListPageNum = () => css``;
 
-export const ContentSubMenuWindowCommon = (
-  toggle: boolean,
-  darkmode: boolean,
-) => css`
+export const ContentSubMenuWindowCommon = (toggle: boolean, darkmode: boolean) => css`
   ${MenuListCommonStyle(darkmode)};
   background-color: ${darkmode ? theme.dark.box : theme.light.userProfileBox};
   width: 120px;

@@ -7,15 +7,15 @@ const path = require('path');
 const fs = require('fs');
 
 try {
-  fs.accessSync('./server/upload');
+  fs.accessSync('./upload');
 } catch (err) {
   console.log('not exist upload folder');
-  fs.mkdirSync('./server/upload');
+  fs.mkdirSync('./upload');
 }
 
 // ADD FRIEND
 router.patch('/addFriend/:myId/:id', isLogin, async (req, res, next) => {
-  // PATCH /user/addFriend
+  // POST /user/addFriend
   try {
     const myId = parseInt(req.params.myId, 10);
     const id = parseInt(req.params.id, 10);
@@ -24,8 +24,7 @@ router.patch('/addFriend/:myId/:id', isLogin, async (req, res, next) => {
       res.status(403).send('No exist userInfo');
     }
     const you = await User.findOne({ where: { id: id } });
-    console.log(me.getFriends());
-    await me.addFriends(req.body.id);
+    await me.addFriended(req.body.id);
     res.status(200).json({ id, myId, username: you.username });
   } catch (err) {
     console.error(err);
@@ -49,8 +48,7 @@ router.delete('/removeFriend/:myId/:id', isLogin, async (req, res, next) => {
       where: { id: id },
       attributes: ['username'],
     });
-    await me.removeFriend(id);
-
+    await me.removeFriended(id);
     res.status(200).json({ id, myId, username: you.username });
   } catch (err) {
     console.error(err);
@@ -73,12 +71,6 @@ router.patch('/addIgnore/:myId/:id', isLogin, async (req, res, next) => {
       res.status(403).send('No exist userInfo');
     }
     const you = await User.findOne({ where: { id: id } });
-    // const posts = await Post.findAll({
-    //   where: {
-    //     UserId: { [Op.ne]: id },
-    //   },
-    // });
-
     await me.addIgnoring(id);
     res.status(200).json({ id, myId, username: you.username });
   } catch (err) {
@@ -114,7 +106,7 @@ router.delete('/removeIgnore/:myId/:id', isLogin, async (req, res, next) => {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, './server/upload');
+      done(null, './upload');
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
