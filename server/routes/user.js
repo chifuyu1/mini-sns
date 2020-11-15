@@ -24,6 +24,7 @@ router.patch('/addFriend/:myId/:id', isLogin, async (req, res, next) => {
       res.status(403).send('No exist userInfo');
     }
     const you = await User.findOne({ where: { id: id } });
+    console.log(me.getFriends());
     await me.addFriends(req.body.id);
     res.status(200).json({ id, myId, username: you.username });
   } catch (err) {
