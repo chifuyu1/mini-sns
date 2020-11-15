@@ -32,16 +32,16 @@ function PostDate({ todayDate, id, UserId, onUpdate }: PostDateProps) {
     }
   }, [dispatch, id]);
 
-  const date = todayDate.split(/[A-Z]|\./);
+  const date = todayDate.split(/\s/);
 
   return (
     <>
       {UserId === userState?.id || userState?.power === 'admin' ? (
         <>
-          <PostUpdate darkmode={darkmode} type="button" onClick={onUpdate}>
+          <PostUpdate darkmode={darkmode} type='button' onClick={onUpdate}>
             <MdModeEdit />
           </PostUpdate>
-          <PostUpdate darkmode={darkmode} type="button" onClick={onRemove}>
+          <PostUpdate darkmode={darkmode} type='button' onClick={onRemove}>
             <BiX />
           </PostUpdate>
         </>

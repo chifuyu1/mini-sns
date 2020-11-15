@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       blockIgnore: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
       },
     },
     {

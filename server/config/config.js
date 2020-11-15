@@ -10,6 +10,12 @@ module.exports = {
     host: '127.0.0.1',
     port: '3306',
     dialect: 'mysql',
+    dialectOptions: {
+      useUTC: false,
+      dateStrings: true,
+      typeCast: true,
+    },
+    timezone: '+09:00',
   },
   test: {
     username: 'root',
@@ -18,6 +24,12 @@ module.exports = {
     host: '127.0.0.1',
     port: 3306,
     dialect: 'mysql',
+    dialectOptions: {
+      useUTC: false,
+      dateStrings: true,
+      typeCast: true,
+    },
+    timezone: '+09:00',
   },
   production: {
     username: 'root',
@@ -26,5 +38,11 @@ module.exports = {
     host: '127.0.0.1',
     port: 3306,
     dialect: 'mysql',
+    dialectOptions: {
+      useUTC: false,
+      dateStrings: true,
+      typeCast: true,
+    },
+    timezone: '+09:00',
   },
 };

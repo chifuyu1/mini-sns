@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducer/index';
@@ -13,6 +13,7 @@ import { FaComment } from 'react-icons/fa';
 import { FiThumbsUp } from 'react-icons/fi';
 import { PostLink } from '../../util/CommonStyle';
 import { addLikeRequest, removeLikeRequest } from '../../reducer/user';
+import { BiCaretDown, BiCaretUp } from 'react-icons/bi';
 
 const PostInfoContainer = styled.div`
   margin: 0;
@@ -64,18 +65,17 @@ const shareStyle: CSSProperties = {
 
 type PostInfoProps = {
   id: number;
+  fold: boolean;
+  onFold: () => void;
 };
 
-function PostInfo({ id }: PostInfoProps) {
+function PostInfo({ id, fold, onFold }: PostInfoProps) {
   const [sharing, setSharing] = useState(false);
   const dispatch = useDispatch();
   const userState = useSelector((state: RootState) => state.user.userInfo);
   const postState = useSelector((state: RootState) => state.post.userPost);
-  const post = postState.find((info) => info.id === id);
-  let count = (post && post.Comments && post.Comments.length) || 0;
-  let likeCount = post?.Likes.length;
 
-  const onLike = () => {
+  const onLike = useCallback(() => {
     if (userState) {
       if (userState?.Likes.map((info: any) => info.id).includes(id)) {
         dispatch(removeLikeRequest({ UserId: userState.id, PostId: id }));
@@ -88,24 +88,24 @@ function PostInfo({ id }: PostInfoProps) {
       alert('로그인이 필요합니다!');
       return;
     }
-  };
+  }, [dispatch, userState, id]);
 
-  const onSharingToggle = () => {
+  const onSharingToggle = useCallback(() => {
     setSharing(!sharing);
-  };
+  }, [sharing]);
 
+  const post = postState.find((info) => info.id === id);
+  let count = (post && post.Comments && post.Comments.length) || 0;
+  let likeCount = post?.Likes.length;
   return (
     <>
       <PostInfoContainer>
         <PostButton onClick={onLike}>
-          {userState?.Likes.map((info: any) => info.id).includes(id) ? (
-            <TiHeartFullOutline />
-          ) : (
-            <FiThumbsUp />
-          )}
+          {userState?.Likes.map((info: any) => info.id).includes(id) ? <TiHeartFullOutline /> : <FiThumbsUp />}
           &nbsp;{likeCount}&nbsp;
         </PostButton>
-        <PostButton>
+        <PostButton onClick={onFold}>
+          {count === 0 ? <></> : fold ? <BiCaretDown /> : <BiCaretUp />}
           <FaComment />
           &nbsp;{count}
         </PostButton>

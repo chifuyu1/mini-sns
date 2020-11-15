@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.enable('trust proxy');
 
-app.use('/', express.static(path.join(__dirname, 'upload')));
+app.use(express.static(path.join(__dirname, 'upload')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -60,8 +60,8 @@ app.use(
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: true,
-      domain: '.chifuyu.site',
+      secure: false,
+      // domain: process.env.NODE_ENV === 'production' ? '.chifuyu.site' : 'http://localhost:3000',
     },
   }),
 );

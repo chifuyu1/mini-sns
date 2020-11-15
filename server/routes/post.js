@@ -14,7 +14,7 @@ router.post('/', isLogin, async (req, res, next) => {
       content: req.body.content,
     });
     const post = await Post.findOne({
-      where: { UserId: req.body.id },
+      where: { UserId: req.body.id, title: req.body.title, content: req.body.content },
       include: [
         {
           model: User,

@@ -1,11 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import {
-  UserProfilePhotoStyle,
-  PostCommentUsername,
-  DatetimeStyle,
-  InputVirtualEvent,
-} from '../../util/CommonStyle';
+import { UserProfilePhotoStyle, PostCommentUsername, DatetimeStyle, InputVirtualEvent } from '../../util/CommonStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../reducer';
 import { removeCommentRequest, updateCommentClicked } from '../../reducer/post';
@@ -21,8 +16,7 @@ const CommentUser = styled.div`
 
 const CommentUserPhoto = styled.a<{ url: string }>`
   ${UserProfilePhotoStyle()}
-  background-image: ${(props) =>
-    props.url ? `url(${baseUrl}/${props.url})` : 'none'};
+  background-image: ${(props) => (props.url ? `url(${baseUrl}/${props.url})` : 'none')};
   cursor: initial;
 `;
 
@@ -53,12 +47,7 @@ type CommentListUserInfoProps = {
   PostId: number;
 };
 
-function CommentListUserInfo({
-  id,
-  PostId,
-  username,
-  writeDate,
-}: CommentListUserInfoProps) {
+function CommentListUserInfo({ id, PostId, username, writeDate }: CommentListUserInfoProps) {
   const darkmode = useSelector((state: RootState) => state.darkmode.mode);
   const userState = useSelector((state: RootState) => state.user.userInfo);
   const postState = useSelector((state: RootState) => state.post.userPost);
@@ -72,27 +61,23 @@ function CommentListUserInfo({
     dispatch(removeCommentRequest({ id, PostId }));
   }, [dispatch, id, PostId]);
 
-  const date = writeDate.split(/[A-Z]|\./);
+  const date = writeDate.split(/\s/);
   const post = postState.find((info) => info.id === PostId);
-  const userImage = post?.Comments.find(
-    (info: any) => info?.User.username === username,
-  )?.ProfileImage?.src;
+  const userImage = post?.Comments.find((info: any) => info?.User.username === username)?.ProfileImage?.src;
 
   return (
     <>
       <CommentUser>
-        <CommentUserPhoto url={userImage}>
-          {userImage ? <></> : <FaUserAlt />}
-        </CommentUserPhoto>
+        <CommentUserPhoto url={userImage}>{userImage ? <></> : <FaUserAlt />}</CommentUserPhoto>
         <CommentUsername>{username}</CommentUsername>
       </CommentUser>
       <CommentDate>
         {userState?.username === username ? (
           <>
-            <CommentUpdate darkmode={darkmode} type="button" onClick={onUpdate}>
+            <CommentUpdate darkmode={darkmode} type='button' onClick={onUpdate}>
               <MdModeEdit />
             </CommentUpdate>
-            <CommentUpdate darkmode={darkmode} type="button" onClick={onRemove}>
+            <CommentUpdate darkmode={darkmode} type='button' onClick={onRemove}>
               <BiX />
             </CommentUpdate>
           </>

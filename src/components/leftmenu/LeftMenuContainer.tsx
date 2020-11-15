@@ -12,7 +12,7 @@ import WriteButtonContainer from '../write/WriteButtonContainer';
 import IgnoreListContainer from './ignore/IgnoreListContainer';
 import RightMenuContainerRes from '../rightmenu/RightMenuRes';
 import { IoMdMoon } from 'react-icons/io';
-import { Toggle } from '../rightmenu/DarkMode/darkmode';
+import { darkmodeToggle } from '../rightmenu/DarkMode/darkmode';
 import LoginButton from '../loginwindow/LoginButton';
 import {
   LeftMenuListStyle,
@@ -36,7 +36,7 @@ function LeftMenuContainer() {
   const isReset = useSelector((state: RootState) => state.post.resetting);
   const searchInput = useRef<HTMLInputElement>(null);
 
-  const onToggle = useCallback(() => dispatch(Toggle()), [dispatch]);
+  const onToggle = useCallback(() => dispatch(darkmodeToggle()), [dispatch]);
   const onReset = useCallback(() => {
     const lastId = postState[postState.length - 1]?.id;
     dispatch(resetTrue());

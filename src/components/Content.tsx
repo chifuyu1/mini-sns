@@ -53,6 +53,7 @@ type ContentProps = {
 function Content({ id, username, title, content, date, UserId }: ContentProps) {
   const [detail, setDetail] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [fold, setFold] = useState(true);
   const [updateTitle, setUpdateTitle] = useState(title);
   const [updateContent, setUpdateContent] = useState(content);
 
@@ -61,11 +62,7 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
       setUpdate((prev) => !prev);
     }
     if (update) {
-      if (
-        window.confirm(
-          '정말로 취소하시겠어요? 작성하던 내용은 모두 사라집니다.',
-        ) === true
-      ) {
+      if (window.confirm('정말로 취소하시겠어요? 작성하던 내용은 모두 사라집니다.') === true) {
         setUpdate((prev) => !prev);
         setUpdateTitle(title);
         setUpdateContent(content);
@@ -78,11 +75,7 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
       setUpdate((prev) => !prev);
     }
     if (update) {
-      if (
-        window.confirm(
-          '정말로 취소하시겠어요? 작성하던 내용은 모두 사라집니다.',
-        )
-      ) {
+      if (window.confirm('정말로 취소하시겠어요? 작성하던 내용은 모두 사라집니다.')) {
         setUpdate((prev) => !prev);
         setUpdateTitle(title);
         setUpdateContent(content);
@@ -90,12 +83,9 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
     }
   }, [update, title, content]);
 
-  const onChangeTitle = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUpdateTitle(e.target.value);
-    },
-    [],
-  );
+  const onChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdateTitle(e.target.value);
+  }, []);
 
   const onChangeContent = useCallback((text: string) => {
     setUpdateContent(text);
@@ -105,6 +95,10 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
     setDetail(!detail);
   }, [detail]);
 
+  const onFold = useCallback(() => {
+    setFold((prev) => !prev);
+  }, []);
+
   const ignoreArray = useSelector((state: RootState) => state.ignore);
   const ignoreList = ignoreArray.map((list) => list.username);
   const writtenArray = useSelector((state: RootState) => state.PostAdd);
@@ -113,11 +107,7 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
   // const isListArray = isList.filter((list) => list.postId === id);
   // const isListLength = isListArray.length;
 
-  const isIgnore = (
-    ignoreUsers: string[],
-    writtenUsers: string[],
-    name: string,
-  ) => {
+  const isIgnore = (ignoreUsers: string[], writtenUsers: string[], name: string) => {
     // 게시물에 차단 목록 유저가 있으면 보여주지 않음
     // 따라서 게시물 username 배열에 차단목록 username이 있는지 확인
     let a = ignoreUsers.sort();
@@ -143,26 +133,16 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
     return flag;
   };
   const isLook = isIgnore(ignoreList, writtenList, username);
-  const isLookError =
-    id === -404 ? 1 : isIgnore(ignoreList, writtenList, username);
+  const isLookError = id === -404 ? 1 : isIgnore(ignoreList, writtenList, username);
 
   return (
     <>
       <PostBackground filter={id === -404 ? 0 : isLook}>
         <PostContent>
           <PostWrapper>
-            <UserInfo
-              onClick={onChangeUserProfile}
-              username={username}
-              id={id}
-            />
+            <UserInfo onClick={onChangeUserProfile} username={username} id={id} />
             <UserProfileDetail detail={detail} username={username} id={id} />
-            <PostDate
-              todayDate={date}
-              id={id}
-              UserId={UserId}
-              onUpdate={onUpdate}
-            />
+            <PostDate todayDate={date} id={id} UserId={UserId} onUpdate={onUpdate} />
           </PostWrapper>
           {update ? (
             <PostUpdate
@@ -180,12 +160,12 @@ function Content({ id, username, title, content, date, UserId }: ContentProps) {
               <PostSummary content={content} />
             </>
           )}
-          <PostInfo id={id} />
+          <PostInfo id={id} fold={fold} onFold={onFold} />
         </PostContent>
       </PostBackground>
       <PostChunk filter={isLookError}>
         <Comment id={id} />
-        <CommentList key={id} id={id} />
+        {fold ? <></> : <CommentList key={id} id={id} />}
       </PostChunk>
     </>
   );

@@ -12,6 +12,7 @@ import ErrorSearch from './error-handling/ErrorSearch';
 import { blockIgnoreRequest, loadUserRequest } from '../reducer/user';
 import { getPostRequest } from '../reducer/post';
 import { loginClose } from './loginwindow/loginWindowReducer';
+import { darkmodeFalse, darkmodeTrue } from './rightmenu/DarkMode/darkmode';
 
 const DisplayView = styled.div`
   ${DisplayViewStyle};
@@ -37,12 +38,22 @@ const Wrapper = styled.div<{ settingsClose: boolean }>`
 
 function ContentContainer() {
   const dispatch = useDispatch();
-  const settingsClose = useSelector(
-    (state: RootState) => state.settingsToggle.close,
-  );
+  const settingsClose = useSelector((state: RootState) => state.settingsToggle.close);
 
   const userState = useSelector((state: RootState) => state.user);
   const postState = useSelector((state: RootState) => state.post);
+
+  useEffect(() => {
+    if (!localStorage.getItem('darkmode')) {
+      localStorage.setItem('darkmode', 'false');
+    }
+    if (localStorage.getItem('darkmode') === 'false') {
+      dispatch(darkmodeFalse());
+    }
+    if (localStorage.getItem('darkmode') === 'true') {
+      dispatch(darkmodeTrue());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (!userState.userInfo) {
@@ -65,10 +76,7 @@ function ContentContainer() {
 
   useEffect(() => {
     function onScroll() {
-      if (
-        window.pageYOffset + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 200
-      ) {
+      if (window.pageYOffset + document.documentElement.clientHeight > document.documentElement.scrollHeight - 200) {
         if (postState.isMoreLoadingPosts && !postState.getPostLoading) {
           const lastId = postState.userPost[postState.userPost.length - 1]?.id;
           dispatch(getPostRequest(lastId));
@@ -79,12 +87,7 @@ function ContentContainer() {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [
-    dispatch,
-    postState.getPostLoading,
-    postState.userPost,
-    postState.isMoreLoadingPosts,
-  ]);
+  }, [dispatch, postState.getPostLoading, postState.userPost, postState.isMoreLoadingPosts]);
 
   useEffect(() => {
     dispatch(loginClose());

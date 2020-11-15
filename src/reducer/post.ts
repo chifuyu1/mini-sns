@@ -344,10 +344,7 @@ const actions = {
 
 type Actions = ActionType<typeof actions>;
 
-export default function postReducer(
-  state: PostState = postState,
-  action: Actions,
-) {
+export default function postReducer(state: PostState = postState, action: Actions) {
   return produce(state, (draft: Draft<typeof postState>) => {
     switch (action.type) {
       case GET_POST_REQUEST:
@@ -376,7 +373,7 @@ export default function postReducer(
         draft.addPostLoading = false;
         draft.addPostDone = true;
         draft.addPostError = null;
-        draft.userPost.push(action.data);
+        draft.userPost = draft.userPost.concat(action.data).sort((a: any, b: any) => b.id - a.id);
         break;
       case ADD_POST_ERROR:
         draft.addPostLoading = false;
@@ -392,10 +389,8 @@ export default function postReducer(
         draft.updatePostLoading = false;
         draft.updatePostDone = true;
         draft.updatePostError = null;
-        draft.userPost.find((info) => info.id === action.data.id).title =
-          action.data.title;
-        draft.userPost.find((info) => info.id === action.data.id).content =
-          action.data.content;
+        draft.userPost.find((info) => info.id === action.data.id).title = action.data.title;
+        draft.userPost.find((info) => info.id === action.data.id).content = action.data.content;
         break;
       case UPDATE_POST_ERROR:
         draft.updatePostLoading = false;
@@ -411,9 +406,7 @@ export default function postReducer(
         draft.removePostLoading = false;
         draft.removePostDone = true;
         draft.removePostError = null;
-        draft.userPost = draft.userPost.filter(
-          (info) => info.id !== action.data.id,
-        );
+        draft.userPost = draft.userPost.filter((info) => info.id !== action.data.id);
         break;
       case REMOVE_POST_ERROR:
         draft.removePostLoading = false;
@@ -436,8 +429,7 @@ export default function postReducer(
         draft.getCommentLoading = false;
         draft.getCommentDone = true;
         draft.getCommentError = null;
-        draft.userPost.find((info) => info.id === action.data.id).Comments =
-          action.data.comment;
+        draft.userPost.find((info) => info.id === action.data.id).Comments = action.data.comment;
         break;
       case GET_COMMENT_ERROR:
         draft.getCommentLoading = false;
@@ -455,8 +447,7 @@ export default function postReducer(
         draft.updateCommentError = null;
         draft.userPost
           .find((info) => info.id === action.data.PostId)
-          .Comments.find((i: any) => i.id === action.data.id).content =
-          action.data.content;
+          .Comments.find((i: any) => i.id === action.data.id).content = action.data.content;
         break;
       case UPDATE_COMMENT_ERROR:
         draft.updateCommentLoading = false;
@@ -469,9 +460,7 @@ export default function postReducer(
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        draft.userPost
-          .find((i) => i.id === action.data.PostId)
-          .Comments.push(action.data);
+        draft.userPost.find((i) => i.id === action.data.PostId).Comments.push(action.data);
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         draft.addCommentError = null;
@@ -492,9 +481,7 @@ export default function postReducer(
         draft.removeCommentDone = true;
         draft.removeCommentError = null;
         let a = draft.userPost.find((i) => i.id === action.data.PostId);
-        a.Comments = a.Comments.filter(
-          (info: any) => info.id !== action.data.id,
-        );
+        a.Comments = a.Comments.filter((info: any) => info.id !== action.data.id);
         break;
       }
       case REMOVE_COMMENT_ERROR:
@@ -515,9 +502,7 @@ export default function postReducer(
           });
         break;
       case REMOVE_LIKE:
-        draft.userPost.find(
-          (info) => info.id === action.data.id,
-        ).Likes = draft.userPost
+        draft.userPost.find((info) => info.id === action.data.id).Likes = draft.userPost
           .find((info) => info.id === action.data.id)
           .Likes.filter((info: any) => info.like.UserId !== action.data.UserId);
         break;

@@ -125,54 +125,44 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.patch(
-  '/profileImage',
-  isLogin,
-  upload.single('profileImage'),
-  async (req, res, next) => {
-    // PATCH /user/profileImage
-    try {
-      const user = await User.findOne({ where: { id: req.body.id } });
-      const image = await ProfileImage.findOne({
-        where: { UserId: req.body.id },
+router.patch('/profileImage', isLogin, upload.single('profileImage'), async (req, res, next) => {
+  // PATCH /user/profileImage
+  try {
+    const user = await User.findOne({ where: { id: req.body.id } });
+    const image = await ProfileImage.findOne({
+      where: { UserId: req.body.id },
+    });
+    if (!image) {
+      const profile = await ProfileImage.create({
+        src: req.file.filename,
+        UserId: user.id,
       });
-      if (!image) {
-        const profile = await ProfileImage.create({
-          src: req.file.filename,
-          UserId: user.id,
-        });
-        res.status(200).json({ src: profile.src, id: req.body.id });
-      } else {
-        const profile = await image.update({ src: req.file.filename });
-        res.status(200).json({ src: profile.src, id: req.body.id });
-      }
-    } catch (err) {
-      console.error(err);
-      next(err);
+      res.status(200).json({ src: profile.src, id: req.body.id });
+    } else {
+      const profile = await image.update({ src: req.file.filename });
+      res.status(200).json({ src: profile.src, id: req.body.id });
     }
-  },
-);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 
 // REMOVE PROFILE IMAGE
-router.patch(
-  '/profileImage/:id',
-  isLogin,
-  upload.single('profileImage'),
-  async (req, res, next) => {
-    // PATCH /user/profileImage/1
-    try {
-      const UserId = parseInt(req.params.id, 10);
-      const image = await ProfileImage.findOne({
-        where: { UserId },
-      });
-      await image.update({ src: '' });
-      res.status(200).json({ id: UserId });
-    } catch (err) {
-      console.error(err);
-      next(err);
-    }
-  },
-);
+router.patch('/profileImage/:id', isLogin, upload.single('profileImage'), async (req, res, next) => {
+  // PATCH /user/profileImage/1
+  try {
+    const UserId = parseInt(req.params.id, 10);
+    const image = await ProfileImage.findOne({
+      where: { UserId },
+    });
+    await image.update({ src: '' });
+    res.status(200).json({ id: UserId });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 
 // ADD LIKE
 router.post('/like/:UserId/:PostId', isLogin, async (req, res, next) => {
@@ -191,9 +181,7 @@ router.post('/like/:UserId/:PostId', isLogin, async (req, res, next) => {
       return res.status(403).send('이미 표시한 상태입니다.');
     } else {
       await post.addLike(UserId);
-      return res
-        .status(200)
-        .json({ id: PostId, username: user.username, UserId: user.id });
+      return res.status(200).json({ id: PostId, username: user.username, UserId: user.id });
     }
   } catch (err) {
     console.error(err);
