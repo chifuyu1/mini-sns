@@ -4,6 +4,7 @@
 
 - 미니SNS 프로젝트입니다.
 - 색상 컨셉은 따뜻한, 포근한 날씨로 컨셉을 잡았습니다.
+- [홈페이지 링크](https://chifuyu.site)
 
 <img src="./src/images/readmePreview.png" alt='readmePreview' />
 
