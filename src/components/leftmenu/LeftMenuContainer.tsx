@@ -26,7 +26,11 @@ import {
 } from './styles';
 import { getPostRequest, resetTrue, searchRequest } from '../../reducer/post';
 
-function LeftMenuContainer() {
+type LeftMenuContainerProps = {
+  top: boolean;
+};
+
+function LeftMenuContainer({ top }: LeftMenuContainerProps) {
   const [searchWord, setSearchWord] = useState('');
   const dispatch = useDispatch();
   const darkmode = useSelector((state: RootState) => state.darkmode.mode);
@@ -65,28 +69,8 @@ function LeftMenuContainer() {
     [searchWord, dispatch],
   );
 
-  // const searchInfo_result = (word: string) =>
-  //   initialState.filter(
-  //     (info) =>
-  //       info.username.includes(word) ||
-  //       info.content.includes(word) ||
-  //       info.title.includes(word),
-  //   );
-
-  // if (searchWord.trim().length === 0 || !searchWord) {
-  //   setSearchWord('');
-  //   dispatch(postRestore());
-  //   return;
-  // } else {
-  //   const temp = searchInfo_result(searchWord);
-  //   dispatch(postFilter(temp));
-  //   if (temp.length === 0) {
-  //     setTimeout(() => setSearchWord(''), 3000);
-  //   }
-  // }
-
   return (
-    <LeftMenuWrapper>
+    <LeftMenuWrapper top={top}>
       <LeftMenuSearchBox darkmode={darkmode}>
         <Icons>
           <MdSearch className='SearchIcon' />

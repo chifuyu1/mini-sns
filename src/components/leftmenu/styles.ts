@@ -11,7 +11,7 @@ import {
 import media from '../../util/mediaQuery';
 import theme from '../../util/theme';
 
-export const LeftMenuWrapper = styled.div`
+export const LeftMenuWrapper = styled.div<{ top: boolean }>`
   width: 200px;
   margin: 0;
   padding: 0;
@@ -19,7 +19,7 @@ export const LeftMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 50px;
+  top: 0px;
   height: fit-content;
   ${media.medium} {
     max-width: 110px;
@@ -34,7 +34,8 @@ export const LeftMenuWrapper = styled.div`
     display: flex;
     width: auto;
     z-index: 9999;
-    top: 0;
+    order: ${(props) => (props.top ? 1 : 0)};
+    bottom: 0;
     position: sticky;
   }
 `;

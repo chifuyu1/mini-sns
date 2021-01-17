@@ -54,37 +54,19 @@ const RightMenuTagContainer = styled.div`
 
 function RightMenuContainerRes() {
   const darkmode = useSelector((state: RootState) => state.darkmode.mode);
+  const frequentlyVisibleTags = ['React', 'Vue', 'Angular', 'HTML', 'CSS', 'JavaScript', 'TypeScript', 'PHP'];
   return (
     <RightMenuWrapper darkmode={darkmode}>
-      <div className="trending">
+      <div className='trending'>
         <MdTrendingUp />
         자주 찾는 주제
       </div>
       <RightMenuTagContainer>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;React
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;Vue
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;Angular
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;HTML
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;CSS
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;JavaScript
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;TypeScript
-        </RightMenuTagStyle>
-        <RightMenuTagStyle darkmode={darkmode}>
-          &#35;&nbsp;PHP
-        </RightMenuTagStyle>
+        {frequentlyVisibleTags.map((element, index) => (
+          <RightMenuTagStyle darkmode={darkmode} key={index}>
+            &#35;&nbsp;{element}
+          </RightMenuTagStyle>
+        ))}
       </RightMenuTagContainer>
       <DarkModeContainer />
     </RightMenuWrapper>

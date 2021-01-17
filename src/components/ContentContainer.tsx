@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Content from './Content';
 import styled from 'styled-components';
 import LeftMenuContainer from './leftmenu/LeftMenuContainer';
@@ -89,35 +89,49 @@ function ContentContainer() {
     };
   }, [dispatch, postState.getPostLoading, postState.userPost, postState.isMoreLoadingPosts]);
 
+  const [top, setTop] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      if (window.pageYOffset > 50) {
+        setTop(true);
+      } else {
+        setTop(false);
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   useEffect(() => {
     dispatch(loginClose());
   }, [dispatch]);
 
   return (
-    <>
-      <DisplayView>
-        <LeftMenuContainer />
-        <Setting />
-        <Wrapper settingsClose={settingsClose}>
-          {postState.userPost.length !== 0 ? (
-            postState.userPost.map((list) => (
-              <Content
-                key={list.id}
-                id={list.id}
-                UserId={list.UserId}
-                username={list?.User?.username}
-                title={list.title}
-                content={list.content}
-                date={list.createdAt}
-              />
-            ))
-          ) : (
-            <ErrorSearch />
-          )}
-        </Wrapper>
-        <RightMenuContainer />
-      </DisplayView>
-    </>
+    <DisplayView>
+      <LeftMenuContainer top={top} />
+      <Setting />
+      <Wrapper settingsClose={settingsClose}>
+        {postState.userPost.length !== 0 ? (
+          postState.userPost.map((list) => (
+            <Content
+              key={list.id}
+              id={list.id}
+              UserId={list.UserId}
+              username={list?.User?.username}
+              title={list.title}
+              content={list.content}
+              date={list.createdAt}
+            />
+          ))
+        ) : (
+          <ErrorSearch />
+        )}
+      </Wrapper>
+      <RightMenuContainer />
+    </DisplayView>
   );
 }
 
